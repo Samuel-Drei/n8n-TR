@@ -1,7 +1,13 @@
 const insight = $json.data[0];
 
 // Verifica se insight é um objeto e pega a array de métricas de ações
-const metricasArray = Array.isArray(insight) ? insight : Object.values(insight).find(val => Array.isArray(val)) || [];
+let metricasArray = [];
+if (Array.isArray(insight)) {
+    metricasArray = insight;
+    } else if (typeof insight === 'object' && insight !== null) {
+        metricasArray = Object.values(insight).find(val => Array.isArray(val)) || [];
+    }
+
 
 // Calculando métricas derivadas
 const impressoes = parseInt(insight.impressions || "0", 10);
